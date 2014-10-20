@@ -161,7 +161,7 @@ namespace Mongoose
         string param;
         while(std::getline(ss, param, '&')){ //block for '&'
             const string& key = param.substr(0, param.find('='));
-            const string& value = param.substr(param.find('=')+1);
+			const string& value = get(key);
             mapKeyValue[key] = value; // insert map
         }
         return mapKeyValue;
