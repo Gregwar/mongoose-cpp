@@ -2,6 +2,7 @@
 #define _MONGOOSE_UTILS_H
 
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -12,6 +13,7 @@ namespace Mongoose
         public:
             static string htmlEntities(string data);
             static void sleep(int ms);
+			static string urlDecode(const string &SRC);
     };
 }
 

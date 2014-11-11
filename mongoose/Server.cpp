@@ -256,6 +256,15 @@ namespace Mongoose
         optionsMap[key] = value;
     }
 
+	string Server::getOption(const string& key)
+	{
+		map<string, string>::iterator it = optionsMap.find(key);
+		if (it != optionsMap.end())
+			return it->second;
+
+		return "";
+	}
+
 #ifndef NO_WEBSOCKET
     WebSockets &Server::getWebSockets()
     {

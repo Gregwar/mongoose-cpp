@@ -3,6 +3,7 @@
 #include <iostream>
 #include <mongoose.h>
 #include "Request.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -153,16 +154,17 @@ namespace Mongoose
 
         return false;
     }
-
-    map<string, string> Request::getAllVariable()
+	
+	multimap<string, string> Request::getAllVariable()
     {
-        map<string, string> mapKeyValue;
-        stringstream ss(data);
+        multimap<string, string> mapKeyValue;
+		stringstream ss(data + '&' + (connection->query_string ? connection->query_string:"")); //POST + GET
         string param;
         while(std::getline(ss, param, '&')){ //block for '&'
-            const string& key = param.substr(0, param.find('='));
-			const string& value = get(key);
-            mapKeyValue[key] = value; // insert map
+            const size_t& delimitPos = param.find('=');
+            const string& key = param.substr(0, delimitPos);
+            const string& value = param.substr(delimitPos+1);
+            mapKeyValue.insert(make_pair(key, Utils::urlDecode(value) ) ); // insert map
         }
         return mapKeyValue;
     }
