@@ -51,7 +51,9 @@
 #include <io.h>         // For _lseeki64
 #include <direct.h>     // For _mkdir
 typedef int socklen_t;
-typedef HANDLE pid_t;
+#ifndef __MINGW32__
+	typedef HANDLE pid_t;
+#endif
 typedef SOCKET sock_t;
 typedef unsigned char uint8_t;
 typedef unsigned int uint32_t;

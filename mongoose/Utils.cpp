@@ -34,7 +34,7 @@ namespace Mongoose
 
     void Utils::sleep(int ms)
     {
-#ifdef WIN32
+#ifdef _MSC_VER
 	Sleep(ms);
 #else
     usleep(1000 * ms);

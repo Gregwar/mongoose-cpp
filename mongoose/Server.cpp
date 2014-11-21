@@ -1,10 +1,10 @@
 #ifndef _MSC_VER
-#include <unistd.h>
+#   include <unistd.h>
 #else 
-#include <time.h>
-#include <sys/types.h>
-#include <sys/timeb.h>
+#   include <sys/types.h>
+#   include <sys/timeb.h>
 #endif
+#include <time.h>
 #include <string>
 #include <string.h>
 #include <iostream>
