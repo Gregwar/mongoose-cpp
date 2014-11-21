@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <cstdio>
 #include "Utils.h"
 #ifndef _MSC_VER
 #include <unistd.h>

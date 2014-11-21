@@ -43,6 +43,8 @@ if (ENABLE_REGEX_URL)
     SET (CMAKE_CXX_FLAGS "-std=c++11")
 endif (ENABLE_REGEX_URL)
 
+SET (CMAKE_CXX_FLAGS "-g")
+
 if (CPP_BINDING)
     set (SOURCES
         ${SOURCES}
@@ -84,9 +86,9 @@ if (NOT WEBSOCKET)
     add_definitions("-DNO_WEBSOCKET")
 endif (NOT WEBSOCKET)
 
-# Adding dl
+# Adding dl and pthread
 if (NOT WIN32)
-    set (EXTRA_LIBS ${EXTRA_LIBS} dl)
+    set (EXTRA_LIBS ${EXTRA_LIBS} dl pthread) 
 endif (NOT WIN32)
 
 # Adding sockets for Win32
