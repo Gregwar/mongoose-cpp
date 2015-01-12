@@ -1,1 +1,9 @@
 build
+libmongoose.dylib
+Makefile
+MongooseConfig.cmake
+CMakeFiles/cmake.check_cache
+cmake_install.cmake
+CMakeCache.txt
+install_manifest.txt
+CMakeFiles
