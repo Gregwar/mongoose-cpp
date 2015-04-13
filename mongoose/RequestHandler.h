@@ -33,6 +33,8 @@ namespace Mongoose
                     (controller->*function)(request, *response);
                 } catch (string exception) {
                     return controller->serverInternalError(exception);
+                } catch (const std::exception& exception) {
+                    return controller->serverInternalError(exception.what());
                 } catch (...) {
                     return controller->serverInternalError("Unknown error");
                 }
