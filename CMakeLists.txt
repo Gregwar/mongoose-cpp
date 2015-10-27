@@ -47,7 +47,7 @@ if (ENABLE_REGEX_URL)
 endif (ENABLE_REGEX_URL)
 
 if (ENABLE_SESSION_BOOST_ANY)
-	find_package(Boost REQUIRED COMPONENTS program_options system)
+	find_package(Boost REQUIRED)
 	include_directories(${Boost_INCLUDE_DIRS})
 	set (EXTRA_LIBS ${EXTRA_LIBS} ${Boost_LIBRARIES}) 
     add_definitions("-DENABLE_SESSION_BOOST_ANY")
