@@ -51,11 +51,31 @@ namespace Mongoose
              * Try to get the value for the given variable
              *
              * @pram string the name of the variable
-             * @param string the fallback value
+             * @param Session::TypeValue the fallback value
              *
-             * @return string the value of the variable if it exists, fallback else
+             * @return Session::TypeValue the value of the variable if it exists, fallback else
              */
             TypeValue get(string key, Session::TypeValue fallback = Session::TypeValue());
+
+#ifdef ENABLE_SESSION_BOOST_ANY
+            /**
+             * Try to get the value for the given variable
+             *
+             * @pram string the name of the variable
+             * @param TypeValue the fallback value
+             *
+             * @return Type the value of the variable if it exists, fallback else
+             */
+            template<class Type>
+            Type get(const string& key, Type fallback = Type())
+			{
+				TypeValue any = get(key);
+				if(any.empty())
+					return boost::any_cast<Type>(any);
+				else
+					return fallback;
+			}
+#endif
 
             /**
              * Pings the session, this will update the creation date to now
