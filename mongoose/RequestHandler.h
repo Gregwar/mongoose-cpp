@@ -24,6 +24,21 @@ namespace Mongoose
             {
             }
 
+            /**
+             * Called when an exception occur during the rendering
+             *
+             * @param string the error message
+             *
+             * @return response a response to send, 404 will occur if NULL
+             */
+            virtual Response *serverInternalError(Request& request, Response& response, string message)
+            {
+                response.setCode(HTTP_SERVER_ERROR);
+                std::cerr << "Request: " << request.getUrl() << "Method: " << request.getMethod() << std::endl;
+                std::cerr << "[500] Server internal error: " << message;
+                return response;
+            }
+
             Response *process(Request &request)
             {
                 R *response = new R;
@@ -32,11 +47,11 @@ namespace Mongoose
                     controller->preProcess(request, *response);
                     (controller->*function)(request, *response);
                 } catch (string exception) {
-                    return controller->serverInternalError(exception);
+                    serverInternalError(request, *response, exception);
                 } catch (const std::exception& exception) {
-                    return controller->serverInternalError(exception.what());
+                    serverInternalError(request, *response, exception.what());
                 } catch (...) {
-                    return controller->serverInternalError("Unknown error");
+                    serverInternalError(request, *response, "Unknown error");
                 }
 
                 return response;
