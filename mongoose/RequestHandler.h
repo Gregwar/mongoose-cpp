@@ -31,12 +31,11 @@ namespace Mongoose
              *
              * @return response a response to send, 404 will occur if NULL
              */
-            virtual Response *serverInternalError(Request& request, Response& response, string message)
+            virtual void serverInternalError(Request& request, Response& response, string message)
             {
                 response.setCode(HTTP_SERVER_ERROR);
                 std::cerr << "Request: " << request.getUrl() << "Method: " << request.getMethod() << std::endl;
                 std::cerr << "[500] Server internal error: " << message;
-                return response;
             }
 
             Response *process(Request &request)
