@@ -34,7 +34,7 @@ namespace Mongoose
             virtual void serverInternalError(Request& request, Response& response, string message)
             {
                 response.setCode(HTTP_SERVER_ERROR);
-                std::cerr << "Request: " << request.getUrl() << "Method: " << request.getMethod() << std::endl;
+                std::cerr << "Request: " << request.getUrl() << " Method: " << request.getMethod() << std::endl;
                 std::cerr << "[500] Server internal error: " << message;
             }
 

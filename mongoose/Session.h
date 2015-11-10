@@ -70,7 +70,7 @@ namespace Mongoose
             Type get(const string& key, Type fallback = Type())
 			{
 				TypeValue any = get(key);
-				if(any.empty())
+                if( ! any.empty() )
 					return boost::any_cast<Type>(any);
 				else
 					return fallback;
