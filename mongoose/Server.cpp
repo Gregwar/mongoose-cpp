@@ -77,7 +77,7 @@ namespace Mongoose
     Server::Server(int port, const char *documentRoot)
         : 
         stopped(false),
-        destroyed(false),
+        destroyed(true),
         server(NULL)
 #ifndef NO_WEBSOCKET 
         ,websockets(NULL)
