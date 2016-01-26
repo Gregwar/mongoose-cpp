@@ -31,7 +31,7 @@ namespace Mongoose
                 try {
                     controller->preProcess(request, *response);
                     (controller->*function)(request, *response);
-                } catch (string exception) {
+                } catch (std::string exception) {
                     return controller->serverInternalError(exception);
                 } catch (...) {
                     return controller->serverInternalError("Unknown error");

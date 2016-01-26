@@ -7,8 +7,6 @@
 #include "WebSocket.h"
 #include "Mutex.h"
 
-using namespace std;
-
 /**
  * WebSockets is an array that contains WebSocket connections, this
  * can be used for instance to broadcast informations to them.
@@ -39,7 +37,7 @@ namespace Mongoose
             /**
              * Send data to all sockets in this container
              */
-            void sendAll(string data);
+            void sendAll(std::string data);
 
             /**
              * Gets the websocket corresponding to the given connection
@@ -60,9 +58,9 @@ namespace Mongoose
              * @param WebSocket* the websocket object
              */
             void remove(WebSocket *websocket, bool lock = true);
-    
+
             /**
-             * Gets the websockets having the id 
+             * Gets the websockets having the id
              *
              * @param int id
              */
@@ -70,8 +68,8 @@ namespace Mongoose
 
         protected:
             Mutex mutex;
-            map<struct mg_connection*, WebSocket*> websockets;
-            map<int, WebSocket*> websocketsById;
+            std::map<struct mg_connection*, WebSocket*> websockets;
+            std::map<int, WebSocket*> websocketsById;
             bool responsible;
 
             int id;

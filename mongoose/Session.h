@@ -4,11 +4,9 @@
 #include <map>
 #include "Mutex.h"
 
-using namespace std;
-
 /**
  * A session contains the user specific values
- */ 
+ */
 namespace Mongoose
 {
     class Session
@@ -22,21 +20,21 @@ namespace Mongoose
              * @param string the name of the variable
              * @param string the value of the variable
              */
-            void setValue(string key, string value);
+            void setValue(std::string key, std::string value);
 
             /**
              * Unset a session varaible
              *
              * @param string the variable name
              */
-            void unsetValue(string key);
+            void unsetValue(std::string key);
 
             /**
              * Check if the given variable exists
              *
              * @param string the name of the variable
              */
-            bool hasValue(string key);
+            bool hasValue(std::string key);
 
             /**
              * Try to get the value for the given variable
@@ -46,7 +44,7 @@ namespace Mongoose
              *
              * @return string the value of the variable if it exists, fallback else
              */
-            string get(string key, string fallback = "");
+            std::string get(std::string key, std::string fallback = "");
 
             /**
              * Pings the session, this will update the creation date to now
@@ -62,7 +60,7 @@ namespace Mongoose
             int getAge();
 
         protected:
-            map<string, string> values;
+            std::map<std::string, std::string> values;
             int date;
             Mutex mutex;
     };
