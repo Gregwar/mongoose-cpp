@@ -2,8 +2,6 @@
 #define _MONGOOSE_UPLOAD_FILE_H
 #include <string>
 
-using namespace std;
-
 /**
  * A file uploaded in a request
  */
@@ -12,16 +10,16 @@ namespace Mongoose
     class UploadFile
     {
         public:
-            UploadFile(string filename, string data);
+            UploadFile(std::string filename, std::string data);
 
-            string getName();
-            string getData();
+            std::string getName();
+            std::string getData();
 
-            void saveTo(string directory);
+            void saveTo(std::string directory);
 
         protected:
-            string filename;
-            string data;
+            std::string filename;
+            std::string data;
     };
 }
 

@@ -14,8 +14,6 @@
 #include "Mutex.h"
 #include "Sessions.h"
 
-using namespace std;
-
 /**
  * Wrapper for the Mongoose server
  */
@@ -82,7 +80,7 @@ namespace Mongoose
              *
              * @return int if we have to keep the connection opened
              */
-            int _webSocketData(struct mg_connection *conn, string data);
+            int _webSocketData(struct mg_connection *conn, std::string data);
 
             /**
              * Process the request by controllers
@@ -100,7 +98,7 @@ namespace Mongoose
              * @param string the name of the option
              * @param string the value of the option
              */
-            void setOption(string key, string value);
+            void setOption(std::string key, std::string value);
 
 #ifndef NO_WEBSOCKET
             /**
@@ -124,22 +122,22 @@ namespace Mongoose
             /**
              * Does the server handles url?
              */
-            bool handles(string method, string url);
+            bool handles(std::string method, std::string url);
 
         protected:
             volatile bool stopped;
             volatile bool destroyed;
             Sessions sessions;
             Mutex mutex;
-            map<string, string> optionsMap;
-            map<struct mg_connection*, Request *> currentRequests;
+            std::map<std::string, std::string> optionsMap;
+            std::map<struct mg_connection*, Request *> currentRequests;
             struct mg_server *server;
 
 #ifndef NO_WEBSOCKET
             WebSockets websockets;
 #endif
 
-            vector<Controller *> controllers;
+            std::vector<Controller *> controllers;
 
             // Statistics
             int requests;

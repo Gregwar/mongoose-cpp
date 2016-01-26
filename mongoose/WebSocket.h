@@ -7,8 +7,6 @@
 #include "Request.h"
 #include "Mutex.h"
 
-using namespace std;
-
 #define WEBSOCKET_FIN 0x80
 
 enum {
@@ -34,7 +32,7 @@ namespace Mongoose
              *
              * @param string the data to send
              */
-            void send(string data, int opcode = WEBSOCKET_OPCODE_TEXT);
+            void send(std::string data, int opcode = WEBSOCKET_OPCODE_TEXT);
 
             /**
              * Returns the connection request
@@ -60,14 +58,14 @@ namespace Mongoose
              *
              * @param string data
              */
-            void appendData(string data);
+            void appendData(std::string data);
 
             /**
              * Gets the internal receive buffer and clear it
              *
              * @return string data
              */
-            string flushData();
+            std::string flushData();
 
             /**
              * Gets the internal mg connection
@@ -110,12 +108,12 @@ namespace Mongoose
         protected:
             int id;
             Mutex mutex;
-            string data;
+            std::string data;
             Request request;
             struct mg_connection *connection;
             bool closed;
 
-            vector<WebSockets *> containers;
+            std::vector<WebSockets *> containers;
     };
 }
 

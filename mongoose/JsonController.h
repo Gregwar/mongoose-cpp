@@ -6,8 +6,6 @@
 #include "WebController.h"
 #include "JsonResponse.h"
 
-using namespace std;
-
 /**
  * A json controller is a controller that serves JSON API
  */

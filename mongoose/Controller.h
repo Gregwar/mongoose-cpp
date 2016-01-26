@@ -9,8 +9,6 @@
 #include "WebSocket.h"
 #include "Sessions.h"
 
-using namespace std;
-
 #define addRoute(httpMethod, url, controllerType, method) \
     registerRoute(httpMethod, url, new RequestHandler<controllerType, StreamResponse>(this, &controllerType::method ));
 
@@ -82,7 +80,7 @@ namespace Mongoose
              *
              * @param string the prefix of all urls for this controller
              */
-            void setPrefix(string prefix);
+            void setPrefix(std::string prefix);
 
             /**
              * Called when a new websocket connection is ready
@@ -97,7 +95,7 @@ namespace Mongoose
              * @param WebSocket the instance of the connection
              * @param string the data arriving
              */
-            virtual void webSocketData(WebSocket *websocket, string data);
+            virtual void webSocketData(WebSocket *websocket, std::string data);
 
             /**
              * Registers a route to the controller
@@ -105,7 +103,7 @@ namespace Mongoose
              * @param string the route path
              * @param RequestHandlerBase the request handler for this route
              */
-            virtual void registerRoute(string httpMethod, string route, RequestHandlerBase *handler);
+            virtual void registerRoute(std::string httpMethod, std::string route, RequestHandlerBase *handler);
 
             /**
              * Initializes the route and settings
@@ -124,7 +122,7 @@ namespace Mongoose
              *
              * @return response a response to send, 404 will occur if NULL
              */
-            virtual Response *serverInternalError(string message);
+            virtual Response *serverInternalError(std::string message);
 
             /**
              * Gets the session for a request/response
@@ -143,15 +141,15 @@ namespace Mongoose
              */
             void setSessions(Sessions *sessions);
 
-            virtual bool handles(string method, string url);
-            vector<string> getUrls();
+            virtual bool handles(std::string method, std::string url);
+            std::vector<std::string> getUrls();
 
         protected:
             Sessions *sessions;
             Server *server;
-            string prefix;
-            map<string, RequestHandlerBase*> routes;
-            vector<string> urls;
+            std::string prefix;
+            std::map<std::string, RequestHandlerBase*> routes;
+            std::vector<std::string> urls;
     };
 }
 

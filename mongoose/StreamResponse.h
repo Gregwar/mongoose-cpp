@@ -7,14 +7,12 @@
 
 #include "Response.h"
 
-using namespace std;
-
 /**
  * A stream response to a request
  */
 namespace Mongoose
 {
-    class StreamResponse : public ostringstream, public Response
+    class StreamResponse : public std::ostringstream, public Response
     {
         public:
             /**
@@ -22,7 +20,7 @@ namespace Mongoose
              *
              * @return string the response body
              */
-            virtual string getBody();
+            virtual std::string getBody();
     };
 }
 

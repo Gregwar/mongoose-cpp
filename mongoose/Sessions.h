@@ -5,18 +5,16 @@
 #include "Session.h"
 #include "Mutex.h"
 
-using namespace std;
-
 /**
  * A session contains the user specific values
- */ 
+ */
 namespace Mongoose
 {
     class Sessions
     {
         public:
-            Sessions(string key = "sessid");
-			virtual ~Sessions();
+            Sessions(std::string key = "sessid");
+            virtual ~Sessions();
 
             /**
              * Gets the session ID of a certain request,
@@ -28,7 +26,7 @@ namespace Mongoose
              *
              * @return string the session ID for this request
              */
-            string getId(Request &request, Response &response);
+            std::string getId(Request &request, Response &response);
 
             /**
              * Gets the session for a certain request
@@ -48,8 +46,8 @@ namespace Mongoose
             void garbageCollect(int oldAge = 3600);
 
         protected:
-            map<string, Session*> sessions;
-            string key;
+            std::map<std::string, Session*> sessions;
+            std::string key;
             Mutex mutex;
     };
 }

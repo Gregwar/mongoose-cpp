@@ -8,8 +8,6 @@
 #include "StreamResponse.h"
 #include "Utils.h"
 
-using namespace std;
-
 /**
  * A web controller is a controller that serves HTML pages
  */

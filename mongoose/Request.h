@@ -11,8 +11,6 @@
 #include "UploadFile.h"
 #include "Response.h"
 
-using namespace std;
-
 /**
  * Request is a wrapper for the clients requests
  */
@@ -37,7 +35,7 @@ namespace Mongoose
              *
              * @return bool true if the param is present, false else
              */
-            bool hasVariable(string key);
+            bool hasVariable(std::string key);
 
             /**
              * Get All variable present in GET or POST data
@@ -45,7 +43,7 @@ namespace Mongoose
              * @brief getAllVariable
              * @return map<string, string> with all variables
              */
-            map<string, string> getAllVariable();
+            std::map<std::string, std::string> getAllVariable();
 
             /**
              * Get the value for a certain variable
@@ -55,7 +53,7 @@ namespace Mongoose
              *
              * @return string the value of the variable if it exists, fallback else
              */
-            string get(string key, string fallback = "");
+            std::string get(std::string key, std::string fallback = "");
 
             /**
              * Checks if the given cookie exists
@@ -64,7 +62,7 @@ namespace Mongoose
              *
              * @return bool true if the given cookie is set
              */
-            bool hasCookie(string key);
+            bool hasCookie(std::string key);
 
             /**
              * Try to get the cookie value
@@ -74,10 +72,10 @@ namespace Mongoose
              *
              * @retun the value of the cookie if it exists, fallback else
              */
-            string getCookie(string key, string fallback = "");
+            std::string getCookie(std::string key, std::string fallback = "");
 
 
-            string getHeaderKeyValue(const std::string& header_key);
+            std::string getHeaderKeyValue(const std::string& header_key);
 
             /**
              * Handle uploads to the target directory
@@ -87,25 +85,25 @@ namespace Mongoose
              */
             void handleUploads();
 
-            string getUrl();
-            string getMethod();
-            string getData();
+            std::string getUrl();
+            std::string getMethod();
+            std::string getData();
 
 #ifdef ENABLE_REGEX_URL
             smatch getMatches();
-            bool match(string pattern);
+            bool match(std::string pattern);
 #endif
-            bool readVariable(const char *data, string key, string &output);
+            bool readVariable(const char *data, std::string key, std::string &output);
 
             /**
              * Files uploaded in this request
              */
-            vector<UploadFile> uploadFiles;
+            std::vector<UploadFile> uploadFiles;
 
         protected:
-            string method;
-            string url;
-            string data;
+            std::string method;
+            std::string url;
+            std::string data;
             struct mg_connection *connection;
     };
 }

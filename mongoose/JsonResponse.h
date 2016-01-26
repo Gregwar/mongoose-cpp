@@ -8,8 +8,6 @@
 
 #include "Response.h"
 
-using namespace std;
-
 /**
  * A stream response to a request
  */
@@ -25,7 +23,7 @@ namespace Mongoose
              *
              * @return string the response body
              */
-            virtual string getBody();
+            virtual std::string getBody();
 
             /**
              * Sets the human readability of the response

@@ -10,14 +10,12 @@
 #define HTTP_FORBIDDEN 403
 #define HTTP_SERVER_ERROR 500
 
-using namespace std;
-
 /**
  * A response to a request
  */
 namespace Mongoose
 {
-    class Response 
+    class Response
     {
         public:
             Response();
@@ -30,7 +28,7 @@ namespace Mongoose
              *
              * @return bool true if the header is set
              */
-            virtual bool hasHeader(string key);
+            virtual bool hasHeader(std::string key);
 
             /**
              * Sets the header
@@ -39,7 +37,7 @@ namespace Mongoose
              *
              * @param value the header value
              */
-            virtual void setHeader(string key, string value);
+            virtual void setHeader(std::string key, std::string value);
 
             /**
              * Get the data of the response, this will contain headers and
@@ -47,14 +45,14 @@ namespace Mongoose
              *
              * @return string the response data
              */
-            virtual string getData();
+            virtual std::string getData();
 
             /**
              * Gets the response body
              *
              * @return string the response body
              */
-            virtual string getBody()=0;
+            virtual std::string getBody()=0;
 
             /**
              * Sets the cookie, note that you can only define one cookie by request
@@ -63,7 +61,7 @@ namespace Mongoose
              * @param string the key of the cookie
              * @param string value the cookie value
              */
-            virtual void setCookie(string key, string value);
+            virtual void setCookie(std::string key, std::string value);
 
             /**
              * Sets the response code
@@ -72,7 +70,7 @@ namespace Mongoose
 
         protected:
             int code;
-            map<string, string> headers;
+            std::map<std::string, std::string> headers;
     };
 }
 
