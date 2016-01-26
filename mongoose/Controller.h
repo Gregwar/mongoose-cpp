@@ -11,12 +11,6 @@
 
 using namespace std;
 
-#define addRoute(httpMethod, url, controllerType, method) \
-    registerRoute(httpMethod, url, new RequestHandler<controllerType, StreamResponse>(this, &controllerType::method ));
-
-#define addRouteResponse(httpMethod, url, controllerType, method, responseType) \
-    registerRoute(httpMethod, url, new RequestHandler<controllerType, responseType>(this, &controllerType::method ));
-
 /**
  * A controller is a module that respond to requests
  *
@@ -145,6 +139,16 @@ namespace Mongoose
 
             virtual bool handles(string method, string url);
             vector<string> getUrls();
+
+            template<typename C>
+            void addRoute(const std::string& httpMethod, const std::string& url, void (C::*func)(Request&, StreamResponse&)){
+                registerRoute(httpMethod, url, new RequestHandler<C, StreamResponse>(static_cast<C*>(this), func));
+            }
+
+            template<typename C, typename R>
+            void addRouteResponse(const std::string& httpMethod, const std::string& url, void (C::*func)(Request&, R&)){
+                registerRoute(httpMethod, url, new RequestHandler<C, R>(static_cast<C*>(this), func));
+            }
 
         protected:
             Sessions *sessions;
