@@ -213,15 +213,18 @@ namespace Mongoose
         }
 
         // Looking on the header
-        output = mg_get_header(this->connection, "Referer");
-        stringstream ss(output.substr(output.find('?')+1));
-        string param;
-        while(std::getline(ss, param, '&')){ //block for '&'
-            const size_t& delimitPos = param.find('=');
-            const string& name = param.substr(0, delimitPos);
-            if(name == key){
-                const string& value = param.substr(delimitPos+1);
-                return value;
+        const char* referer = mg_get_header(this->connection, "Referer");
+        if(referer){
+            output = referer;
+            stringstream ss(output.substr(output.find('?')+1));
+            string param;
+            while(std::getline(ss, param, '&')){ //block for '&'
+                const size_t& delimitPos = param.find('=');
+                const string& name = param.substr(0, delimitPos);
+                if(name == key){
+                    const string& value = param.substr(delimitPos+1);
+                    return value;
+                }
             }
         }
 
