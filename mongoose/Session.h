@@ -3,8 +3,12 @@
 
 #include <map>
 #include "Mutex.h"
+#ifdef ENABLE_SESSION_BOOST_ANY
+#  include <boost/any.hpp>
+#endif
 
 using namespace std;
+
 
 /**
  * A session contains the user specific values
@@ -13,6 +17,11 @@ namespace Mongoose
 {
     class Session
     {
+#ifdef ENABLE_SESSION_BOOST_ANY
+        typedef boost::any TypeValue;
+#else
+        typedef std::string TypeValue;
+#endif
         public:
             Session();
 
@@ -20,9 +29,9 @@ namespace Mongoose
              * Sets the value of a session variable
              *
              * @param string the name of the variable
-             * @param string the value of the variable
+             * @param Session::TypeValue the value of the variable
              */
-            void setValue(string key, string value);
+            void setValue(string key, Session::TypeValue value);
 
             /**
              * Unset a session varaible
@@ -42,11 +51,31 @@ namespace Mongoose
              * Try to get the value for the given variable
              *
              * @pram string the name of the variable
-             * @param string the fallback value
+             * @param Session::TypeValue the fallback value
              *
-             * @return string the value of the variable if it exists, fallback else
+             * @return Session::TypeValue the value of the variable if it exists, fallback else
              */
-            string get(string key, string fallback = "");
+            TypeValue get(string key, Session::TypeValue fallback = Session::TypeValue());
+
+#ifdef ENABLE_SESSION_BOOST_ANY
+            /**
+             * Try to get the value for the given variable
+             *
+             * @pram string the name of the variable
+             * @param TypeValue the fallback value
+             *
+             * @return Type the value of the variable if it exists, fallback else
+             */
+            template<class Type>
+            Type get(const string& key, Type fallback = Type())
+			{
+				TypeValue any = get(key);
+                if( ! any.empty() )
+					return boost::any_cast<Type>(any);
+				else
+					return fallback;
+			}
+#endif
 
             /**
              * Pings the session, this will update the creation date to now
@@ -62,7 +91,7 @@ namespace Mongoose
             int getAge();
 
         protected:
-            map<string, string> values;
+            map<string, TypeValue> values;
             int date;
             Mutex mutex;
     };

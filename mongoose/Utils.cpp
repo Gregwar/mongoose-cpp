@@ -1,10 +1,11 @@
 #include <iostream>
 #include <sstream>
+#include <cstdio>
 #include "Utils.h"
-#ifndef WIN32
+#ifndef _MSC_VER
 #include <unistd.h>
 #endif
-#ifdef WIN32
+#ifdef _MSC_VER
 #include <windows.h>
 #endif
 
@@ -33,10 +34,32 @@ namespace Mongoose
 
     void Utils::sleep(int ms)
     {
-#ifdef WIN32
+#ifdef _MSC_VER
 	Sleep(ms);
 #else
     usleep(1000 * ms);
 #endif
     }
+
+
+	string Utils::urlDecode(const string &SRC) {
+		string ret;
+		char ch;
+		int ii;
+		for (int i = 0; i<SRC.length(); i++) {
+			if (int(SRC[i]) == 37) {
+				sscanf(SRC.substr(i + 1, 2).c_str(), "%x", &ii);
+				ch = static_cast<char>(ii);
+				ret += ch;
+				i = i + 2;
+			}
+			else if (SRC[i] == '+'){
+				ret += ' ';
+			}
+			else {
+				ret += SRC[i];
+			}
+		}
+		return (ret);
+	}
 }

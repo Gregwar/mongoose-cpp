@@ -102,6 +102,14 @@ namespace Mongoose
              */
             void setOption(string key, string value);
 
+			/**
+			* Get a mongoose extra option
+			*
+			* @param string the name of the option
+			* @return string the value of the option
+			*/
+			string getOption(const string& key);
+
 #ifndef NO_WEBSOCKET
             /**
              * Returns the WebSockets container

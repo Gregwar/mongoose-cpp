@@ -1,10 +1,10 @@
 #ifndef _MSC_VER
-#include <unistd.h>
+#   include <unistd.h>
 #else 
-#include <time.h>
-#include <sys/types.h>
-#include <sys/timeb.h>
+#   include <sys/types.h>
+#   include <sys/timeb.h>
 #endif
+#include <time.h>
 #include <string>
 #include <string.h>
 #include <iostream>
@@ -77,7 +77,7 @@ namespace Mongoose
     Server::Server(int port, const char *documentRoot)
         : 
         stopped(false),
-        destroyed(false),
+        destroyed(true),
         server(NULL)
 #ifndef NO_WEBSOCKET 
         ,websockets(NULL)
@@ -256,6 +256,15 @@ namespace Mongoose
     {
         optionsMap[key] = value;
     }
+
+	string Server::getOption(const string& key)
+	{
+		map<string, string>::iterator it = optionsMap.find(key);
+		if (it != optionsMap.end())
+			return it->second;
+
+		return "";
+	}
 
 #ifndef NO_WEBSOCKET
     WebSockets &Server::getWebSockets()

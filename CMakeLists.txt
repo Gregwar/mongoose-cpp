@@ -22,6 +22,9 @@ option (ENABLE_STATS
 
 option (ENABLE_REGEX_URL
     "Enable url regex matching dispatcher" OFF)
+	
+option (ENABLE_SESSION_BOOST_ANY
+    "Enable session values with boost any" OFF)
 
 set (JSONCPP_DIR "${PROJECT_SOURCE_DIR}/../jsoncpp"
     CACHE STRING "Json C++ directory")
@@ -40,8 +43,15 @@ endif (ENABLE_STATS)
 
 if (ENABLE_REGEX_URL)
     add_definitions("-DENABLE_REGEX_URL")
-    SET (CMAKE_CXX_FLAGS "-std=c++11")
+    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif (ENABLE_REGEX_URL)
+
+if (ENABLE_SESSION_BOOST_ANY)
+	find_package(Boost REQUIRED)
+	include_directories(${Boost_INCLUDE_DIRS})
+	set (EXTRA_LIBS ${EXTRA_LIBS} ${Boost_LIBRARIES}) 
+    add_definitions("-DENABLE_SESSION_BOOST_ANY")
+endif (ENABLE_SESSION_BOOST_ANY)
 
 if (CPP_BINDING)
     set (SOURCES
@@ -84,9 +94,9 @@ if (NOT WEBSOCKET)
     add_definitions("-DNO_WEBSOCKET")
 endif (NOT WEBSOCKET)
 
-# Adding dl
+# Adding dl and pthread
 if (NOT WIN32)
-    set (EXTRA_LIBS ${EXTRA_LIBS} dl)
+    set (EXTRA_LIBS ${EXTRA_LIBS} dl pthread) 
 endif (NOT WIN32)
 
 # Adding sockets for Win32

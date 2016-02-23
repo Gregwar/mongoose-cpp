@@ -45,7 +45,7 @@ namespace Mongoose
              * @brief getAllVariable
              * @return map<string, string> with all variables
              */
-            map<string, string> getAllVariable();
+			multimap<string, string> getAllVariable();
 
             /**
              * Get the value for a certain variable

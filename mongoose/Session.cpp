@@ -19,7 +19,7 @@ namespace Mongoose
         mutex.unlock();
     }
 
-    void Session::setValue(string key, string value)
+    void Session::setValue(string key, Session::TypeValue value)
     {
         mutex.lock();
         values[key] = value;
@@ -38,11 +38,11 @@ namespace Mongoose
         return values.find(key) != values.end();
     }
 
-    string Session::get(string key, string fallback)
+    Session::TypeValue Session::get(string key, Session::TypeValue fallback)
     {
         mutex.lock();
         if (hasValue(key)) {
-            string value = values[key];
+            TypeValue value = values[key];
             mutex.unlock();
 
             return value;
@@ -56,4 +56,5 @@ namespace Mongoose
     {
         return time(NULL)-date;
     }
+
 }

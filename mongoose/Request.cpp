@@ -3,6 +3,7 @@
 #include <iostream>
 #include <mongoose.h>
 #include "Request.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -153,16 +154,17 @@ namespace Mongoose
 
         return false;
     }
-
-    map<string, string> Request::getAllVariable()
+	
+	multimap<string, string> Request::getAllVariable()
     {
-        map<string, string> mapKeyValue;
-        stringstream ss(data);
+        multimap<string, string> mapKeyValue;
+		stringstream ss(data + '&' + (connection->query_string ? connection->query_string:"")); //POST + GET
         string param;
         while(std::getline(ss, param, '&')){ //block for '&'
-            const string& key = param.substr(0, param.find('='));
-            const string& value = param.substr(param.find('=')+1);
-            mapKeyValue[key] = value; // insert map
+            const size_t& delimitPos = param.find('=');
+            const string& key = param.substr(0, delimitPos);
+            const string& value = param.substr(delimitPos+1);
+            mapKeyValue.insert(make_pair(key, Utils::urlDecode(value) ) ); // insert map
         }
         return mapKeyValue;
     }
@@ -208,6 +210,22 @@ namespace Mongoose
         dataField = data.c_str();
         if (dataField != NULL && readVariable(dataField, key, output)) {
             return output;
+        }
+
+        // Looking on the header
+        const char* referer = mg_get_header(this->connection, "Referer");
+        if(referer){
+            output = referer;
+            stringstream ss(output.substr(output.find('?')+1));
+            string param;
+            while(std::getline(ss, param, '&')){ //block for '&'
+                const size_t& delimitPos = param.find('=');
+                const string& name = param.substr(0, delimitPos);
+                if(name == key){
+                    const string& value = param.substr(delimitPos+1);
+                    return value;
+                }
+            }
         }
 
         return fallback;
