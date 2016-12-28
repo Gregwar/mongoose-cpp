@@ -10,6 +10,7 @@ namespace Mongoose
     class RequestHandlerBase
     {
         public:
+            virtual ~RequestHandlerBase() {}
             virtual Response *process(Request &request)=0;
     };
 
